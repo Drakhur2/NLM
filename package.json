@@ -1,0 +1,14 @@
+{
+  "name": "nlm",
+  "version": "1.0.6",
+  "description": "The list project",
+  "main": "App.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "author": "Prince",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
