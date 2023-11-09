@@ -36,9 +36,6 @@
                   <input type="radio" name="HTTPtype"  value="post">&nbspPOST
                 </label>
                 <label>
-                  <input type="radio" name="HTTPtype" value="put">&nbspPUT
-                </label>
-                <label>
                   <input type="radio" name="HTTPtype" value="delete">&nbspDELETE
                  </label>
                 <label>
@@ -47,16 +44,12 @@
               </div>
 
               <div id="data" class="entryContainer">
-                <legend>Input DATA here</legend>
+                <legend>Type the item and ID</legend>
                 <hr>
-                <label for="name">Name:</label>
-                <input type="text" id="name" class="UserData" value="" placeholder="for post,put, patch">
-                <label for="userName">Username:</label>
-                <input type="text" id="userName" class="UserData" value="" placeholder="for post, patch">
-                <label for="email">Email:</label>
-                <input type="email" id="email" class="UserData" value="" placeholder="for post, patch">
-                <label for="id">ID</label>
-                <input type="number" id="id" class="UserData" value="" placeholder="for delete, get, put">
+                <label for="name">List Name:</label>
+                <input type="text" id="name" class="UserData" value="" placeholder="enter the name">
+                <label for="id">List ID:</label>
+                <input type="number" id="id" class="UserData" value="" placeholder="item ID">
               </div>
             </div>
             <div>
@@ -72,7 +65,7 @@
       </div>
     </div>
   </div>
-
+  
   <script src="Library.js"></script>
   <script src="http_reqs.js"></script>
 </body>

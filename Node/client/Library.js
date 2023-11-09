@@ -1,8 +1,3 @@
-// const {json} = require("express");
-
-// import { json } from "express";
-// const { json } = require("cors")
-
 class Library {
 
     constructor(){
@@ -10,10 +5,20 @@ class Library {
     
     async Get(targetURL){ // Tested, Works
         let response;
+        const jdata = {item: null};
+        if (data.name === ""){
+            data = null;
+        }else{
+            let stringRepresentation = await this.#objectToString(data);
+    
+            console.log(stringRepresentation); 
 
+            jdata.item = stringRepresentation;
+
+        }
         const requestOptions = {
             method: "GET",
-            headers: {"content-type": "application/json"}
+            headers: {"content-type": "application/json"},
         };
         const test = await fetch(targetURL, requestOptions);
         console.log(test.json());
@@ -41,19 +46,7 @@ class Library {
     }
     
 
-    async Put(targetURL, data){ 
-        let response;
-    
-        const requestOptions = {
-            method: "PUT",
-            headers: {"content-type": "application/json"},
-            body: JSON.stringify(data),
-        };
-        response = await this.#processFetch (targetURL, requestOptions);
-        return await response.json();
-    }
-
-    async Delete(targetURL, data) { // working on it
+    async Delete(targetURL, data) { // working //on it
         let response;
 
         let stringRepresentation = await this.#objectToString(data);
@@ -61,14 +54,12 @@ class Library {
         console.log(stringRepresentation); 
 
         const encodedItemName = encodeURIComponent(stringRepresentation);
-        // const jdata = {
-        //     item: stringRepresentation,
-        // };
+        
+        //create the full url with the data attched
         const fullURL = `${targetURL}${encodedItemName}`;
         const requestOptions = {
             method: "DELETE"
-            // headers: {"content-type": "application/json"},
-            // body: JSON.stringify(jdata)
+
         };
             
         response = await fetch(fullURL, requestOptions);
@@ -77,27 +68,46 @@ class Library {
             throw new Error(`HTTP error! status: ${response.status}`);
             
         }
-        console.log(response.status);
-        return await response;
+        const outData = await response.json();
+       
+        return outData;
     }catch(error){
         console.error("Could not delete",error);
-        return `Error: ${error.message}`;
+        return `${error}`;
     }
         
-    }
+}
 async patch(targetURL, data){
     let response;
-    const requestOptions = {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      };
-      response = await this.#processFetch(targetURL, requestOptions);
-      return await response.json();
+
+    if(!data.id){
+        delete data.id;
+    };
+
+    try{
+        let stringRepresentation = await this.#objectToString(data);
         
+        const encodedItemName = encodeURIComponent(stringRepresentation);
+        //create the full url with the data attached
+        const fullURL = `${targetURL}${encodedItemName}`;
+        
+        const requestOptions = {
+        method: 'PATCH'
+    };
+
+      response = await fetch(fullURL, requestOptions);
+      if(!response.ok){
+        throw new Error(`HTTP error! status: ${response.statusText}`);
+      }
+      const resp = await response.body;
+      console.log(resp);
+      return resp;
+        
+    }catch(error){
+        console.log(`Error: ${error}`);
+        throw error;
     }
+  }
 
     async #processFetch (targetURL, requestOptions) { 
         console.log("Requesting URL:", targetURL);
