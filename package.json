@@ -2,7 +2,7 @@
   "name": "nlm",
   "version": "1.0.6",
   "description": "The list project",
-  "main": "App.js",
+  "main": "Node/app.js",
   "scripts": {
     "test": "jest"
   },
